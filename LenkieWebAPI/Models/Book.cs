@@ -2,7 +2,7 @@
 
 namespace LenkieWebAPI.Models
 {
-    public class BookDTO
+    public class Book
     {
         [Key]
         public int BookId { get; set; }

@@ -18,13 +18,13 @@ namespace LenkieWebAPI.Data
         public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
         {
         }
-        public DbSet<BookDTO> Books { get; set; }
+        public DbSet<Book> Books { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<BookDTO>().HasData(new BookDTO
+            modelBuilder.Entity<Book>().HasData(new Book
             {
                 BookId = 1,
                 BookName = "Networking Advanced course",
@@ -32,7 +32,7 @@ namespace LenkieWebAPI.Data
                 InventoryCount = 0
             });
 
-            modelBuilder.Entity<BookDTO>().HasData(new BookDTO
+            modelBuilder.Entity<Book>().HasData(new Book
             {
                 BookId = 2,
                 BookName = "Investment Basics 101",
@@ -40,7 +40,7 @@ namespace LenkieWebAPI.Data
                 InventoryCount = 2
             });
 
-            modelBuilder.Entity<BookDTO>().HasData(new BookDTO
+            modelBuilder.Entity<Book>().HasData(new Book
             {
                 BookId = 3,
                 BookName = "Little Frog Princess",
@@ -48,7 +48,7 @@ namespace LenkieWebAPI.Data
                 InventoryCount = 2
             });
 
-            modelBuilder.Entity<BookDTO>().HasData(new BookDTO
+            modelBuilder.Entity<Book>().HasData(new Book
             {
                 BookId = 4,
                 BookName = "Architecture design C#",
@@ -56,7 +56,7 @@ namespace LenkieWebAPI.Data
                 InventoryCount = 1
             });
 
-            modelBuilder.Entity<BookDTO>().HasData(new BookDTO
+            modelBuilder.Entity<Book>().HasData(new Book
             {
                 BookId = 5,
                 BookName = "Bed time stories",
