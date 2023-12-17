@@ -1,25 +1,19 @@
 ﻿using LenkieWebAPI.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using static Azure.Core.HttpHeader;
 
 namespace LenkieWebAPI.Data
 {
-    public class UserDbContext : IdentityDbContext<ApplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
-        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-    }
-
-    public class BookDbContext : DbContext
-    {
-        public BookDbContext(DbContextOptions<BookDbContext> options) : base(options)
-        {
-        }
         public DbSet<Book> Books { get; set; }
-
+        public DbSet<BorrowedBook> BorrowedBooks { get; set; }
+        public DbSet<BookReservationTracking> BookReservationTracking { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

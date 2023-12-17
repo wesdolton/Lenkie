@@ -1,0 +1,44 @@
+﻿@using Lenkie.Web.Models.DTO;
+@model BookDTO
+
+<form asp-action="BookEdit">
+    <br />
+    <div class="container border p-3">
+        <h1 class="text-white text-center">Edit Book</h1>
+        <input asp-for="BookId" hidden />
+        <hr />
+        <div class="row">
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Book Name</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="BookName" class="form-control" />
+                <span asp-validation-for="BookName" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Book Author</label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="BookAuthor" class="form-control" />
+                <span asp-validation-for="BookAuthor" class="text-danger"></span>
+            </div>
+            <div class="col-2">
+                <label class="control-label pt-2" style="font-size:20px;">Description</label>
+            </div>
+            <div class="col-10 pb-3">
+                <textarea asp-for="InventoryCount" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="InventoryCount" class="text-danger"></span>
+            </div>
+            <div class="col-5 offset-2">
+                <a asp-action="BookIndex" class="btn-primary btn form-control ">Back to List</a>
+            </div>
+            <div class="col-5">
+                <input type="submit" value="Update" class="btn btn-success form-control" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

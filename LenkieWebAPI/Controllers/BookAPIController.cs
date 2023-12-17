@@ -15,11 +15,11 @@ namespace LenkieWebAPI.Controllers
     [Authorize]
     public class BookAPIController : ControllerBase
     {
-        private readonly BookDbContext _db;
+        private readonly AppDbContext _db;
         private ResponseDTO _response;
         private IMapper _mapper;
 
-        public BookAPIController(BookDbContext db, IMapper mapper)
+        public BookAPIController(AppDbContext db, IMapper mapper)
         {
             _db = db;
             _response = new ResponseDTO();
@@ -27,7 +27,7 @@ namespace LenkieWebAPI.Controllers
         }
 
         [HttpGet]
-        public ResponseDTO Get()
+        public ResponseDTO GetBooks()
         {
             try
             {
@@ -45,7 +45,7 @@ namespace LenkieWebAPI.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public ResponseDTO Get(int id)
+        public ResponseDTO SearchBook(int id)
         {
             try
             {

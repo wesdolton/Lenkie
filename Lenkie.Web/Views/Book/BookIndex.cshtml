@@ -1,0 +1,64 @@
+﻿@using Lenkie.Web.Models.DTO;
+@model IEnumerable<BookDTO>
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-white">Book List</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<div class="row pb-3">
+			<div class="col-6">
+			</div>
+			<div class="col-6 text-end">
+				<a asp-action="BookCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create New Book</a>
+
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Book Name
+					</th>
+					<th>
+						Authour
+					</th>
+					<th>
+						Inventory Count
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@item.BookName
+						</td>
+						<td>
+							@item.BookAuthor
+						</td>
+						<td>
+							@((item.InventoryCount).ToString("c"))
+						</td>
+						<td>
+							<a asp-action="BookEdit" asp-route-bookId="@item.BookId" class="btn btn-success">
+								<i class="bi bi-pencil-square"></i>
+							</a>
+							<a asp-action="BookDelete" asp-route-bookId="@item.BookId" class="btn btn-danger">
+								<i class="bi bi-trash"></i>
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
