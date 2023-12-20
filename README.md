@@ -1,8 +1,12 @@
-# Solution1
+# Lenkie
 
+Software requirements
+-.Net 7
+-SQL Server
+-Visual Studio 2022
+
+Setup Database
 run EF migration command
--Update-Database -context BookDbContext
--Update-Database -context UserDbContext
+-Update-Database
 
-userName: admim@admin.com
-password: Password_01
+-Setup project to startup both projects in the solutions
