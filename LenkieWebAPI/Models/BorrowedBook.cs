@@ -14,7 +14,7 @@ namespace LenkieWebAPI.Models
         [ForeignKey("BookId")]
         public Book Book { get; set; }
         public DateTime DateBorrowed { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
         public Boolean isBookReturned { get; set; }
     }
 }

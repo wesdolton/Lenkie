@@ -10,10 +10,10 @@
                 <div class="p-0 my-3 border rounded">
                     <div class="card">
                         <h3 class="card-title text-white-50 text-center py-2">@book.BookName</h3>
-                        @* <img src="@book." class="card-img-top"> *@
+                        <img src="@book.imageUrl" class="card-img-top">
                         <div class="card-body">
                             <div class="d-flex justify-content-between py-2">
-                                <span class="text-danger" style="font-size:20px;">@string.Format("{0:c}", book.InventoryCount)</span>
+                                <span class="text-danger" style="font-size:20px;">@book.InventoryCount</span>
                                 <span class="badge bg-warning text-white p-2">@book.BookAuthor</span>
                             </div>
                             @* <p class="card-text">@Html.Raw(book.BookAuthor)</p> *@

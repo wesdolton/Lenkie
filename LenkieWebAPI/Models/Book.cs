@@ -11,5 +11,8 @@ namespace LenkieWebAPI.Models
         [Required]
         public string BookAuthor { get; set; }
         public int InventoryCount { get; set; }
+        public string imageUrl { get; set; } = "https://placehold.co/603x403";
+        public string ShortDescription { get; set; }
+
     }
 }

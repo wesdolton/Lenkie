@@ -4,6 +4,7 @@ using LenkieWebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LenkieWebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231218174124_update-book-model")]
+    partial class updatebookmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,7 +129,6 @@ namespace LenkieWebAPI.Migrations
                             BookAuthor = "Peter",
                             BookName = "Networking Advanced course",
                             InventoryCount = 0,
-                            ShortDescription = "Unravel the mysteries of a celestial library where stories transcend space and time. Chronicles of the Celestial Scribe weaves a tapestry of cosmic adventures, where a humble scribe holds the key to unlocking the boundless tales of the universe, each word etching the destiny of worlds yet unknown.",
                             imageUrl = "https://placehold.co/603x403"
                         },
                         new
@@ -135,7 +137,6 @@ namespace LenkieWebAPI.Migrations
                             BookAuthor = "John",
                             BookName = "Investment Basics 101",
                             InventoryCount = 2,
-                            ShortDescription = "Venture into the quantum frontier where reality blurs and possibilities multiply. Quantum Paradox explores a world where science collides with the surreal, and choices create branching timelines. As the protagonist grapples with the consequences of their decisions, a mind-bending adventure unfolds across the multiverse.",
                             imageUrl = "https://placehold.co/603x403"
                         },
                         new
@@ -144,7 +145,6 @@ namespace LenkieWebAPI.Migrations
                             BookAuthor = "Same",
                             BookName = "Little Frog Princess",
                             InventoryCount = 2,
-                            ShortDescription = "Amidst the mystical mists of Azurea, a forgotten prophecy stirs the winds of change. Mists of Azurea unfolds the tale of a reluctant hero, chosen by ancient forces, as they navigate a realm where illusions dance and destinies intertwine. Will they unravel the secrets veiled in the ethereal mist?",
                             imageUrl = "https://placehold.co/603x403"
                         },
                         new
@@ -153,7 +153,6 @@ namespace LenkieWebAPI.Migrations
                             BookAuthor = "Mary",
                             BookName = "Architecture design C#",
                             InventoryCount = 1,
-                            ShortDescription = "Dive into a world where music is magic and melodies hold the power to shape reality. Ephemeral Symphony follows the journey of a young prodigy navigating the harmonious landscapes of a city that resonates with enchanting tunes. A symphony of love, loss, and the transcendent notes that echo through the ages.",
                             imageUrl = "https://placehold.co/603x403"
                         },
                         new
@@ -162,7 +161,6 @@ namespace LenkieWebAPI.Migrations
                             BookAuthor = "Tom",
                             BookName = "Bed time stories",
                             InventoryCount = 1,
-                            ShortDescription = "In a realm where ancient magic collides with the technological wonders of tomorrow, a reluctant hero discovers a hidden legacy. Whispers of the Forgotten invites readers on an epic journey through forgotten cities and forbidden realms, where secrets buried in time awaken to reshape destinies.",
                             imageUrl = "https://placehold.co/603x403"
                         });
                 });
@@ -213,13 +211,20 @@ namespace LenkieWebAPI.Migrations
                     b.Property<DateTime>("DateBorrowed")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ReturnDate")
+                    b.Property<int?>("Email")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ReturnDate")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("isBookReturned")
                         .HasColumnType("bit");
 
                     b.HasKey("BorrowedBookId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("Email");
 
                     b.ToTable("BorrowedBooks");
                 });
@@ -383,6 +388,23 @@ namespace LenkieWebAPI.Migrations
                 });
 
             modelBuilder.Entity("LenkieWebAPI.Models.BookReservationTracking", b =>
+                {
+                    b.HasOne("LenkieWebAPI.Models.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LenkieWebAPI.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("Email");
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("LenkieWebAPI.Models.BorrowedBook", b =>
                 {
                     b.HasOne("LenkieWebAPI.Models.Book", "Book")
                         .WithMany()

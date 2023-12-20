@@ -11,7 +11,7 @@ namespace LenkieWebAPI.Models
         public int BookId { get; set; }
         public Book Book { get; set; }
         public DateTime DateBorrowed { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
         public Boolean isBookReturned { get; set; }
     }
 }

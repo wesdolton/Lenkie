@@ -8,5 +8,7 @@ namespace Lenkie.Web.Service.IService
         Task<ResponseDTO?> GetBorrowedBooksAsync();
         Task<ResponseDTO?> AssignBookToCustomerAsync(BorrowedBookDTO borrowedBookDTO);
         Task<ResponseDTO?> ReserveBookForCustomerAsync(BookReservationTrackingDTO bookReservationTrackingDTO);
+        Task<ResponseDTO?> ReturnBorrowedBookAsync(BorrowedBookDTO borrowedBookDTO);
+        Task<ResponseDTO?> GetUserborrowedbooksAsync(string email);
     }
 }

@@ -40,6 +40,15 @@ namespace Lenkie.Web.Service
             });
         }
 
+        public async Task<ResponseDTO?> GetUserborrowedbooksAsync(string email)
+        {
+            return await _baseService.SendAsync(new RequestDTO()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = SD.LenkieWebAPIBase + "/api/transactionAPI/GetUserborrowedbooks/"+ email,
+            });
+        }
+
         public async Task<ResponseDTO?> ReserveBookForCustomerAsync(BookReservationTrackingDTO bookReservationTrackingDTO)
         {
             return await _baseService.SendAsync(new RequestDTO()
@@ -47,6 +56,16 @@ namespace Lenkie.Web.Service
                 ApiType = SD.ApiType.POST,
                 Url = SD.LenkieWebAPIBase + "/api/transactionAPI/AssignBook",
                 Data = bookReservationTrackingDTO
+            });
+        }
+
+        public async Task<ResponseDTO?> ReturnBorrowedBookAsync(BorrowedBookDTO borrowedBookDTO)
+        {
+            return await _baseService.SendAsync(new RequestDTO()
+            {
+                ApiType = SD.ApiType.POST,
+                Url = SD.LenkieWebAPIBase + "/api/transactionAPI/ReturnBorrowedBook",
+                Data = borrowedBookDTO
             });
         }
     }

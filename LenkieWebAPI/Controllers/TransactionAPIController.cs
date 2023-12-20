@@ -61,6 +61,55 @@ namespace LenkieWebAPI.Controllers
             return _response;
         }
 
+        [HttpGet]
+        [Route("GetUserborrowedbooks")]
+        public ResponseDTO GetUserborrowedbooks(string email)
+        {
+            try
+            {
+                IEnumerable<BorrowedBook> objList = _db.BorrowedBooks.Where(borrowedBook => borrowedBook.CustomerEmail == email).ToList();
+                _response.Result = _mapper.Map<IEnumerable<BorrowedBookDTO>>(objList); ;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+            }
+
+            return _response;
+        }
+
+        [HttpPost]
+        [Route("returnBorrowedBook")]
+        public ResponseDTO ReturnBorrowedBook(BorrowedBookDTO borrowedBookDTO)
+        {
+            try
+            {             
+                BorrowedBook borrowedBook = _db.BorrowedBooks.FirstOrDefault(b => b.BorrowedBookId == borrowedBookDTO.BorrowedBookId);
+                borrowedBook.isBookReturned = true;
+                borrowedBook.ReturnDate = DateTime.Now;
+
+                Book book = _db.Books.FirstOrDefault(book => book.BookId == borrowedBookDTO.BookId);
+                book.InventoryCount++;
+
+                //Update datebase with above changes
+                _db.Books.Update(book);
+                _db.BorrowedBooks.Update(borrowedBook);
+
+                _db.SaveChanges();
+
+
+                _response.Result = _mapper.Map<BorrowedBookDTO>(borrowedBookDTO); ;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccessful = false;
+                _response.Message = ex.Message;
+            }
+
+            return _response;
+        }
+
         [HttpPost]
         [Route("AssignBook")]
         [Authorize(Roles = "ADMIN")]
@@ -68,11 +117,16 @@ namespace LenkieWebAPI.Controllers
         {
             try
             {
+                borrowedBookDTO.BorrowedBookId = 0;
                 //Search if book exists
                 var bookFromDB = await _db.Books.AsNoTracking().FirstOrDefaultAsync(book => book.BookId == borrowedBookDTO.BookId);
+                //var customerFromDB = await _db.Customers.AsNoTracking().FirstOrDefaultAsync(customer => customer.Email == borrowedBookDTO.CustomerEmail);
 
                 if (bookFromDB.InventoryCount > 1)
                 {
+                    //borrowedBookDTO.Customer = customerFromDB;
+                    borrowedBookDTO.Book = bookFromDB;
+
                     //Reserve Book if there's an inventory
                     BorrowedBook obj = _mapper.Map<BorrowedBook>(borrowedBookDTO);
                     _db.BorrowedBooks.Add(obj);

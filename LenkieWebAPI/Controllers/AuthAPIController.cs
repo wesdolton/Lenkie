@@ -1,7 +1,10 @@
-﻿using LenkieWebAPI.Models.DTO;
+﻿using LenkieWebAPI.Data;
+using LenkieWebAPI.Models;
+using LenkieWebAPI.Models.DTO;
 using LenkieWebAPI.Services.IService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 namespace LenkieWebAPI.Controllers
 {
@@ -10,11 +13,13 @@ namespace LenkieWebAPI.Controllers
     public class AuthAPIController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly AppDbContext _db;
         protected ResponseDTO _response;
 
-        public AuthAPIController(IAuthService authService)
+        public AuthAPIController(IAuthService authService, AppDbContext db)
         {
             _authService = authService;
+            _db = db;
             _response = new();
         }
 
@@ -29,6 +34,17 @@ namespace LenkieWebAPI.Controllers
                 _response.IsSuccessful = false;
                 _response.Message = errorMessage;
                 return BadRequest(_response);
+            }
+
+            if (!model.Role.IsNullOrEmpty() && model.Role != "ADMIN")
+            {
+                Customer customer = new Customer
+                                    {
+                                        Name = model.Name,
+                                        Email = model.Email,
+                                    };
+                _db.Customers.Add(customer);
+                _db.SaveChanges();
             }
 
             return Ok(_response);

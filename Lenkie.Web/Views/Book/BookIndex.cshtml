@@ -44,7 +44,7 @@
 							@item.BookAuthor
 						</td>
 						<td>
-							@((item.InventoryCount).ToString("c"))
+							@item.InventoryCount
 						</td>
 						<td>
 							<a asp-action="BookEdit" asp-route-bookId="@item.BookId" class="btn btn-success">

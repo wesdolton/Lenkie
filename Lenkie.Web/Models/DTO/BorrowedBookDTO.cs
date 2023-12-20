@@ -6,7 +6,7 @@
         public string CustomerEmail { get; set; }
         public int BookId { get; set; }
         public DateTime DateBorrowed { get; set; }
-        public DateTime ReturnDate { get; set; }
+        public DateTime? ReturnDate { get; set; }
         public Boolean isBookReturned { get; set; }
     }
 }
